@@ -8,10 +8,14 @@ from django.conf import settings
 from restclients.gws import GWS
 from myuw.dao.pws import get_netid_of_current_user
 from myuw.logger.timer import Timer
-from myuw.logger.logback import log_resp_time, log_exception
+from myuw.logger.logback import log_resp_time
 
 
 logger = logging.getLogger(__name__)
+
+
+# FIRST_YEAR_PROGRAM = 'uw_uaa_first_year_program'
+FIRST_YEAR_PROGRAM = 'u_myuw_first_year_program'
 
 
 def _is_member(groupid):
@@ -127,3 +131,11 @@ def is_staff_employee():
     within 15 days
     """
     return _is_member('uw_affiliation_staff-employee')
+
+
+def is_first_year_programs_student():
+    """
+    Return True if the user is identified as a member of the
+    First Year Programs
+    """
+    return _is_member(FIRST_YEAR_PROGRAM)

@@ -14,7 +14,7 @@ from myuw.dao.gws import is_grad_student, is_student,\
     is_current_graduate_student, is_undergrad_student,\
     is_pce_student, is_student_employee, is_employee, is_faculty,\
     is_seattle_student, is_bothell_student, is_tacoma_student,\
-    is_staff_employee
+    is_staff_employee, is_first_year_programs_student
 from myuw.dao.enrollment import get_main_campus
 from myuw.models import UserMigrationPreference
 
@@ -52,12 +52,6 @@ def get_all_affiliations(request):
         return request.myuw_user_affiliations
 
     enrolled_campuses = get_current_quarter_course_campuses(request)
-    is_fyp = False
-    try:
-        is_fyp = is_thrive_viewer()
-    except Exception:
-        # This fails in unit tests w/o userservice
-        pass
 
     data = {"grad": is_grad_student(),
             "undergrad": is_undergrad_student(),
@@ -65,7 +59,7 @@ def get_all_affiliations(request):
             "pce": is_pce_student(),
             "stud_employee": is_student_employee(),
             "employee": is_employee(),
-            "fyp": is_fyp,
+            "fyp": is_first_year_programs_student(),
             "faculty": is_faculty(),
             "seattle": enrolled_campuses["seattle"] or is_seattle_student(),
             "bothell": enrolled_campuses["bothell"] or is_bothell_student(),
