@@ -191,7 +191,7 @@ def valid_myuw_user(request, is_mobile):
         invalid_myuw_user('graduate student affiliation')
 
     if is_undergrad_student():
-        invalid_myuw_user('student affiliation')
+        return
 
     invalid_myuw_user('unsupported affiliation')
 
